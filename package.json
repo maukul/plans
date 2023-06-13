@@ -47,6 +47,7 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
+    "date-fns": "^2.30.0",
     "jest-cucumber": "^3.0.1"
   }
 }

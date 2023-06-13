@@ -105,3 +105,8 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
+
+build
+
+src/data/duties.ts
+src/data/users.ts

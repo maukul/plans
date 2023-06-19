@@ -1,21 +1,23 @@
 import {
-  startOfWeek,
-  endOfWeek,
-  differenceInCalendarWeeks,
   addWeeks,
+  differenceInCalendarWeeks,
+  endOfWeek,
+  setDefaultOptions,
+  startOfWeek,
 } from 'date-fns';
-import { users } from './data/users';
-import { createWeightUser } from './utils/weightUser';
+
+import { createPdf } from './createPdf';
 import { createPlan } from './createPlan';
+import { users } from './data/users';
 import { Plan } from './type/plan';
+import { createWeightUser } from './utils/weightUser';
 
 function initialization() {
-  const startPlan = startOfWeek(new Date(2023, 6, 12), { weekStartsOn: 1 });
-  const endPlan = endOfWeek(new Date(2024, 1, 1), { weekStartsOn: 1 });
+  setDefaultOptions({ weekStartsOn: 1 });
+  const startPlan = startOfWeek(new Date(2023, 6, 12));
+  const endPlan = endOfWeek(new Date(2024, 1, 1));
 
-  const weeks = differenceInCalendarWeeks(endPlan, startPlan, {
-    weekStartsOn: 1,
-  });
+  const weeks = differenceInCalendarWeeks(endPlan, startPlan);
 
   createWeightUser(users);
 
@@ -36,10 +38,10 @@ function run() {
     });
     plans.push(...plansWeek);
   }
-  // eslint-disable-next-line no-console
-  console.log('plans', plans);
+
+  createPdf({
+    plans,
+  });
 }
 
 run();
-// isFriday; // пятниця
-// isSunday; // неділя

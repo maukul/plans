@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>{{title}}</title>
+    <style>
+      table {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+      
+      table td, table th {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+      
+      table tr:nth-child(even){background-color: #f2f2f2;}
+      
+      
+      table th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #04AA6D;
+        color: white;
+      }
+      </style>
+  </head>
+  <body>
+    <h1>{{title}}</h1>
+    <table>
+        <tbody>
+          <tr>
+            <td>
+              <p style="text-align: center;">Дати</p>
+            </td>
+            {{#each weeksPlansHead}}
+                <td>
+                    <p style="text-align: center;">{{duty.name}}</p>
+                </td>
+            {{/each}}
+          </tr>
+            {{#each weeksPlans}}
+                <tr>
+                  <td>
+                      <p>{{date}}</p>
+                  </td>
+                    {{#each dates}}
+                        <td>
+                            <p>{{users}}</p>
+                        </td>
+                    {{/each}}
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+  </body>
+</html>

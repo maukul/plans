@@ -107,6 +107,7 @@ dist
 .vscode-test
 
 build
+output
 
 src/data/duties.ts
 src/data/users.ts

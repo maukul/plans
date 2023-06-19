@@ -1,7 +1,9 @@
 import { isSameWeek } from 'date-fns';
+
 import { duties } from './data/duties';
 import { DutyKey } from './type/duty';
 import { Plan } from './type/plan';
+import { getFridaySundayWeek } from './utils/date';
 import { addWeightUsers, getWeightUsers } from './utils/weightUser';
 
 type CreatePlanParams = {
@@ -13,16 +15,23 @@ export function createPlan({ currentWeek }: CreatePlanParams) {
   const dutiesKey = Object.keys(duties) as DutyKey[];
   dutiesKey.forEach((dutyKey) => {
     const plan: Plan = {
-      date: currentWeek,
+      dates: [],
+      dateWeek: currentWeek,
       duty: dutyKey,
       usersId: [],
     };
-    if (duties[dutyKey].customDates === undefined) {
+
+    if (
+      ['microphones', 'apparatus', 'corridors', 'stage', 'zoom'].includes(
+        dutyKey,
+      )
+    ) {
       const users = getWeightUsers({
         countUsers: duties[dutyKey].countPeople,
         currentWeek,
         dutyKey,
       });
+      plan.dates = getFridaySundayWeek(currentWeek);
       plan.usersId.push(...users.map((user) => user.id));
       addWeightUsers({
         weightUsers: users,
@@ -37,8 +46,7 @@ export function createPlan({ currentWeek }: CreatePlanParams) {
             currentWeek,
             dutyKey,
           });
-
-          plan.date = date;
+          plan.dates.push(date);
           plan.usersId.push(...users.map((user) => user.id));
           addWeightUsers({
             weightUsers: users,

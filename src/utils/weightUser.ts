@@ -1,3 +1,5 @@
+import { subWeeks } from 'date-fns';
+
 import { DutyKey } from '@/type/duty';
 import { User } from '@/type/user';
 import { WeightUser } from '@/type/weightUser';
@@ -14,7 +16,9 @@ export function createWeightUser(users: User[]): void {
 }
 
 function sortWeightUsers() {
-  return weightUsers.sort((a, b) => a.weight - b.weight);
+  return weightUsers
+    .sort(() => 0.5 - Math.random())
+    .sort((a, b) => a.weight - b.weight);
 }
 
 type GetWeightUsersParams = {
@@ -30,7 +34,9 @@ export function getWeightUsers({
 }: GetWeightUsersParams) {
   const users = sortWeightUsers().filter(
     (user) =>
-      user.duties.includes(dutyKey) && !user.dates.includes(currentWeek),
+      user.duties.includes(dutyKey) &&
+      !user.dates.includes(currentWeek) &&
+      !user.dates.includes(subWeeks(currentWeek, 1)),
   );
   return users.slice(0, countUsers);
 }
